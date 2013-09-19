@@ -3,6 +3,10 @@ module.exports = function(config){
     basePath : '../',
 
     files : [
+      'app/js/jquery-1.9.1.js',
+      'app/js/jquery.ui.core.min.js',
+      'app/js/jquery.ui.widget.min.js',
+      'app/js/jquery.ui.datepicker.min.js',
       'app/lib/angular/angular.js',
       'app/lib/angular/angular-*.js',
       'test/lib/angular/angular-mocks.js',

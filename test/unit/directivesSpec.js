@@ -16,4 +16,18 @@ describe('directives', function() {
       });
     });
   });
+
+  describe('datepicker', function() {
+    it('should invoke the datepicker method', function() {
+      inject(function($compile, $rootScope) {
+        var datepickerFunction = $.fn.datepicker;
+        spyOn($.fn, 'datepicker').andCallThrough();
+
+        var element = $compile('<div datepicker />')($rootScope);
+
+        expect($.fn.datepicker).toHaveBeenCalled();
+        $.fn.datepicker = datepickerFunction;
+      })
+    })
+  })
 });

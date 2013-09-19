@@ -8,4 +8,9 @@ angular.module('bookingApp.directives', []).
     return function(scope, elm, attrs) {
       elm.text(version);
     };
-  }]);
+  }]).
+  directive('datepicker', function() {
+  	return function(scope, elm, attrs) {
+  	  elm.datepicker();
+  	}
+  });
