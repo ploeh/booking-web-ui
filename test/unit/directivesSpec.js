@@ -5,6 +5,14 @@
 describe('directives', function() {
   beforeEach(module('bookingApp.directives'));
 
+  var datepickerFunction;
+  beforeEach(function() {
+    datepickerFunction = $.fn.datepicker;
+  })
+  afterEach(function() {
+    $.fn.datepicker = datepickerFunction;
+  })
+
   describe('app-version', function() {
     it('should print current version', function() {
       module(function($provide) {
@@ -20,13 +28,9 @@ describe('directives', function() {
   describe('datepicker', function() {
     it('should invoke the datepicker method', function() {
       inject(function($compile, $rootScope) {
-        var datepickerFunction = $.fn.datepicker;
         spyOn($.fn, 'datepicker').andCallThrough();
-
         var element = $compile('<div datepicker />')($rootScope);
-
         expect($.fn.datepicker).toHaveBeenCalled();
-        $.fn.datepicker = datepickerFunction;
       })
     })
   })
