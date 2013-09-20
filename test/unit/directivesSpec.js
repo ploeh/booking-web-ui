@@ -47,11 +47,12 @@ describe('directives', function() {
         spyOn($.fn, 'datepicker').andCallThrough();
         spyOn($location, 'path').andCallThrough();
         spyOn($rootScope, '$apply').andCallThrough();
+        var dateText = '2013.09.28';
         
         $compile('<div datepicker />')($rootScope);
-        $.fn.datepicker.mostRecentCall.args[0].onSelect();
+        $.fn.datepicker.mostRecentCall.args[0].onSelect(dateText);
 
-        expect($location.path).toHaveBeenCalledWith('/book');
+        expect($location.path).toHaveBeenCalledWith('/book/' + dateText);
         expect($rootScope.$apply).toHaveBeenCalled();
       })
     });

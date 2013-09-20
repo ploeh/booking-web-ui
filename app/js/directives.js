@@ -15,7 +15,7 @@ angular.module('bookingApp.directives', []).
   	  	elm.datepicker({
   	  	  dateFormat : 'yy.mm.dd',
   	  	  onSelect : function(dateText, inst) {
-  	  	  	$location.path('/book');
+  	  	  	$location.path('/book/' + dateText);
   	  	  	scope.$apply();
   	  	  }
   	  	});
