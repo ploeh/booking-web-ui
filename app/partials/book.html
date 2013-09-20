@@ -1,4 +1,11 @@
-<p>This is the partial for view 2.</p>
+<form>
+	Date: {{booking.date}}<br />
+	Name: <input type="text" ng-model="booking.name" /><br />
+	E-mail: <input type="email" ng-model="booking.email" /><br />
+	Quantity: <select></select><br />
+	<button ng-click="update(booking)">Save</button>
+</form>
+
 <p>
   Showing of 'interpolate' filter:
   {{ 'Current version is v%VERSION%.' | interpolate }}
