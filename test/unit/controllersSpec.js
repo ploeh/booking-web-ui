@@ -17,6 +17,17 @@ describe('controllers', function(){
   	  var dateText = '2013.09.20';
   	  createController('BookController', { $scope : scope, $routeParams : { dateText : dateText }});
   	  expect(scope.booking.date).toEqual(dateText);
+  	});
+
+  	it('should set receipt flag to false initially', function() {
+  	  createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.20' }});
+  	  expect(scope.isReceipt).toBeFalsy();
+  	});
+
+  	it('should set receipt flag to true upon save', function() {
+  	  createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.20' }});
+  	  scope.save();
+  	  expect(scope.isReceipt).toBeTruthy();
   	})
   })
 });

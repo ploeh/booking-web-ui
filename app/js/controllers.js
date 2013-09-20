@@ -8,4 +8,8 @@ angular.module('bookingApp.controllers', []).
   }])
   .controller('BookController', function($scope, $routeParams) {
   	$scope.booking = { date : $routeParams.dateText };
+
+  	$scope.save = function(){
+  	  $scope.isReceipt = true;
+  	}
   });
