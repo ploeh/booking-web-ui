@@ -54,6 +54,14 @@ describe('directives', function() {
         expect($location.path).toHaveBeenCalledWith('/book');
         expect($rootScope.$apply).toHaveBeenCalled();
       })
+    });
+
+    it('should invoke datepicker with the correct date format', function() {
+      inject(function($compile, $rootScope) {
+        spyOn($.fn, 'datepicker').andCallThrough();
+        $compile('<div datepicker />')($rootScope);
+        expect($.fn.datepicker.mostRecentCall.args[0].dateFormat).toEqual('yy.mm.dd');
+      })
     })
   })
 });

@@ -13,6 +13,7 @@ angular.module('bookingApp.directives', []).
   	return {
   	  link : function(scope, elm, attrs) {
   	  	elm.datepicker({
+  	  	  dateFormat : 'yy.mm.dd',
   	  	  onSelect : function(dateText, inst) {
   	  	  	$location.path('/book');
   	  	  	scope.$apply();
