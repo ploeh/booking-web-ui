@@ -47,6 +47,16 @@ describe('controllers', function(){
   	  createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.20' }});
   	  scope.save();
   	  expect(scope.isReceipt).toBeTruthy();
+  	});
+
+  	it('should contain a seats list with at least a zero', function() {
+  	  createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.20' }});
+  	  expect(scope.seats).toContain(0);
+  	});
+
+  	it('should have a default quantity', function() {
+  	  createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.20' }});
+  	  expect(scope.booking.quantity).toEqual(0);
   	})
   })
 });

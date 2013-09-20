@@ -16,9 +16,11 @@ angular.module('bookingApp.controllers', []).
   }]).
 
   controller('BookController', function($scope, $routeParams) {
-  	$scope.booking = { date : $routeParams.dateText };
+  	$scope.booking = { date : $routeParams.dateText, quantity : 0 };
+
+  	$scope.seats = [0];
 
   	$scope.save = function(){
   	  $scope.isReceipt = true;
-  	}
+  	};
   });
