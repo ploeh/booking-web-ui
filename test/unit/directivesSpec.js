@@ -51,7 +51,7 @@ describe('directives', function() {
         $compile('<div datepicker />')($rootScope);
         $.fn.datepicker.mostRecentCall.args[0].onSelect();
 
-        expect($location.path).toHaveBeenCalledWith('/view2');
+        expect($location.path).toHaveBeenCalledWith('/book');
         expect($rootScope.$apply).toHaveBeenCalled();
       })
     })

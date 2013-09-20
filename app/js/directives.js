@@ -14,7 +14,7 @@ angular.module('bookingApp.directives', []).
   	  link : function(scope, elm, attrs) {
   	  	elm.datepicker({
   	  	  onSelect : function(dateText, inst) {
-  	  	  	$location.path('/view2');
+  	  	  	$location.path('/book');
   	  	  	scope.$apply();
   	  	  }
   	  	});
