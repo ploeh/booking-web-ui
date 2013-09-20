@@ -32,6 +32,14 @@ describe('directives', function() {
         var element = $compile('<div datepicker />')($rootScope);
         expect($.fn.datepicker).toHaveBeenCalled();
       })
+    });
+
+    it('should invoke datepicker with an onSelect function', function() {
+      inject(function($compile, $rootScope) {
+        spyOn($.fn, 'datepicker').andCallThrough();
+        $compile('<div datepicker />')($rootScope);
+        expect($.fn.datepicker.mostRecentCall.args[0].onSelect).toBeDefined();
+      })
     })
   })
 });
