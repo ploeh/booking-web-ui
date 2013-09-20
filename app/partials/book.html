@@ -1,12 +1,26 @@
-<form ng-submit="save()">
+<form ng-submit="save()" ng-hide="isReceipt">
 	Date: {{booking.date}}<br />
-	Name: <input type="text" ng-model="booking.name" ng-hide="isReceipt" /><br />
-	E-mail: <input type="email" ng-model="booking.email" ng-hide="isReceipt" /><br />
-	Quantity: <select ng-hide="isReceipt"></select><br />
-	<input type="submit" id="save" value="Save" ng-hide="isReceipt" />
+	Name: <input type="text" ng-model="booking.name" /><br />
+	Email: <input type="email" ng-model="booking.email" /><br />
+	Quantity: <select></select><br />
+	<input type="submit" id="save" value="Save" />
 </form>
 
-<div ng-show="isReceipt">Please note that this page only verifies that we have received your request. It does not guarantee that we can fulfill your reservation, but in either case we will send you an email as soon as we know.</div>
+<div ng-show="isReceipt">
+	<h1>Thank your for your reservation!</h1>
+	<fieldset>
+		<legend>We have recorded the following about your request:</legend>
+
+		<div>Date: {{booking.date}}</div>
+		<div>Name: {{booking.name}}</div>
+		<div>Email: {{booking.email}}</div>
+		<div>Quantity: {{booking.quantity}}</div>
+	
+	</fieldset>
+	<p>
+		<div>Please note that this page only verifies that we have received your request. It does not guarantee that we can fulfill your reservation, but in either case we will send you an email as soon as we know.</div>
+	</p>
+</div>
 
 <p>
   Showing of 'interpolate' filter:
