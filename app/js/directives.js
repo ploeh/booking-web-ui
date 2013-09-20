@@ -10,7 +10,9 @@ angular.module('bookingApp.directives', []).
     };
   }]).
   directive('datepicker', function() {
-  	return function(scope, elm, attrs) {
-  	  elm.datepicker();
+  	return {
+  	  link : function(scope, elm, attrs) {
+  	  	elm.datepicker();
+  	  } 
   	}
   });
