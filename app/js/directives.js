@@ -9,11 +9,14 @@ angular.module('bookingApp.directives', []).
       elm.text(version);
     };
   }]).
-  directive('datepicker', function() {
+  directive('datepicker', function($location) {
   	return {
   	  link : function(scope, elm, attrs) {
   	  	elm.datepicker({
-  	  	  onSelect : function(dateText, inst) {}
+  	  	  onSelect : function(dateText, inst) {
+  	  	  	$location.path('/view2');
+  	  	  	scope.$apply();
+  	  	  }
   	  	});
   	  } 
   	}

@@ -40,6 +40,20 @@ describe('directives', function() {
         $compile('<div datepicker />')($rootScope);
         expect($.fn.datepicker.mostRecentCall.args[0].onSelect).toBeDefined();
       })
+    });
+
+    it('should have an onSelect function that navigates to correct view', function() {
+      inject(function($compile, $rootScope, $location) {
+        spyOn($.fn, 'datepicker').andCallThrough();
+        spyOn($location, 'path').andCallThrough();
+        spyOn($rootScope, '$apply').andCallThrough();
+        
+        $compile('<div datepicker />')($rootScope);
+        $.fn.datepicker.mostRecentCall.args[0].onSelect();
+
+        expect($location.path).toHaveBeenCalledWith('/view2');
+        expect($rootScope.$apply).toHaveBeenCalled();
+      })
     })
   })
 });
