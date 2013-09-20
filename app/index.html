@@ -7,9 +7,9 @@
   <link rel="stylesheet" href="css/jquery.ui.all.css">
 </head>
 <body>
-  <ul class="menu">
+  <ul class="menu" ng-controller="MenuController">
     <li><a href="#/home">home</a></li>
-    <li><a href="#/book/2013.09.20">view2</a></li>
+    <li><a href="" ng-click="bookToday()">book today!</a></li>
   </ul>
 
   <div ng-view></div>
