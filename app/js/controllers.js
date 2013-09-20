@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('bookingApp.controllers', []).
-  controller('MyCtrl1', [function() {
+  controller('HomeController', [function() {
 
   }])
   .controller('MyCtrl2', [function() {
