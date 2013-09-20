@@ -6,6 +6,6 @@ angular.module('bookingApp.controllers', []).
   controller('HomeController', [function() {
 
   }])
-  .controller('MyCtrl2', [function() {
+  .controller('BookController', [function() {
 
   }]);
