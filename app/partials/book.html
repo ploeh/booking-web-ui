@@ -1,13 +1,19 @@
-<form ng-submit="save()" ng-hide="isReceipt">
-	Date: {{booking.date}}<br />
-	Name: <input type="text" ng-model="booking.name" /><br />
-	Email: <input type="email" ng-model="booking.email" /><br />
-	Quantity: <select ng-model="booking.quantity" ng-options="seat for seat in seats"></select><br />
-	<input type="submit" id="save" value="Save" />
-</form>
+<div ng-hide="isReceipt">
+	<h1>Make a reservation</h1>
+	<form ng-submit="save()">
+		<fieldset>
+			<legend>Please fill in the details about your reservation request:</legend>
+			Date: {{booking.date}}<br />
+			Name: <input type="text" ng-model="booking.name" /><br />
+			Email: <input type="email" ng-model="booking.email" /><br />
+			Quantity: <select ng-model="booking.quantity" ng-options="seat for seat in seats"></select><br />
+			<input type="submit" id="save" value="Save" />
+		</fieldset>
+	</form>
+</div>
 
 <div ng-show="isReceipt">
-	<h1>Thank your for your reservation!</h1>
+	<h1>Thank your for your reservation</h1>
 	<fieldset>
 		<legend>We have recorded the following about your request:</legend>
 
