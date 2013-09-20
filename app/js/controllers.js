@@ -11,9 +11,15 @@ angular.module('bookingApp.controllers', []).
   	};
   }).
 
-  controller('HomeController', [function() {
-
-  }]).
+  controller('HomeController', function($scope, $location) {
+  	$("#datepicker").datepicker({
+  	  dateFormat : 'yy.mm.dd',
+  	  onSelect : function(dateText, inst) {
+  	  	$location.path('/book/' + dateText);
+  	  	$scope.$apply();
+  	  }
+  	});
+  }).
 
   controller('BookController', function($scope, $routeParams) {
   	$scope.booking = { date : $routeParams.dateText, quantity : 0 };
