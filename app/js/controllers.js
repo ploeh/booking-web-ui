@@ -26,13 +26,17 @@ angular.module('bookingApp.controllers', []).
 
   	$scope.seats = [0];
 
+    $scope.isReceipt = false;
+
   	$scope.save = function() {
       reservationGateway.makeReservation({
         date: $scope.booking.date,
         name: $scope.booking.name,
         email: $scope.booking.email,
         quantity: $scope.booking.quantity
+      }).
+      success(function() {
+        $scope.isReceipt = true;
       });
-  	  $scope.isReceipt = true;
   	};
   });

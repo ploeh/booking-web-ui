@@ -77,10 +77,14 @@ describe('controllers', function(){
   describe('BookController', function() {
     var reservationGateway;
     beforeEach(function() {
-      reservationGateway = { makeReservation : function() {} };
-      //module(function($provide) {
-      //  $provide.value('reservationGateway', reservationGateway);
-      //});
+      reservationGateway = {
+        makeReservation: jasmine.createSpy('makeReservation').andCallFake(function() {
+          return {
+            success: function() {},
+            error: function(){}
+          }
+        })
+      }
     });
 
   	it('should set the correct booking date', function() {
@@ -94,12 +98,6 @@ describe('controllers', function(){
   	  expect(scope.isReceipt).toBeFalsy();
   	});
 
-  	it('should set receipt flag to true upon save', function() {
-  	  createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.20' }, reservationGateway : reservationGateway });
-  	  scope.save();
-  	  expect(scope.isReceipt).toBeTruthy();
-  	});
-
   	it('should contain a seats list with at least a zero', function() {
   	  createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.20' }, reservationGateway : reservationGateway });
   	  expect(scope.seats).toContain(0);
@@ -111,7 +109,6 @@ describe('controllers', function(){
   	});
 
     it('should make reservation on gateway upon save', function() {
-      spyOn(reservationGateway, 'makeReservation');
       createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.25' }, reservationGateway : reservationGateway });
       scope.booking.name = 'Linea Vega';
       scope.booking.email = 'like.you.would.like.to.know@would.you.com';
@@ -126,6 +123,40 @@ describe('controllers', function(){
         quantity: scope.booking.quantity
       };
       expect(reservationGateway.makeReservation).toHaveBeenCalledWith(expected);
-    })
+    });
+
+    it('should not set isReceipt to true upon gateway failure', function() {
+      reservationGateway.makeReservation.andCallFake(function() {
+        return {
+          success: function(cb) {},
+          error: function(cb) { cb(); }
+        }
+      });
+      createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.25' }, reservationGateway : reservationGateway });
+      scope.booking.name = 'Linea Vega';
+      scope.booking.email = 'like.you.would.like.to.know@would.you.not.com';
+      scope.booking.quantity = 3;
+      
+      scope.save();
+
+      expect(scope.isReceipt).toBeFalsy();
+    });
+
+    it('should not set isReceipt to true upon gateway failure', function() {
+      reservationGateway.makeReservation.andCallFake(function() {
+        return {
+          success: function(cb) { cb(); },
+          error: function(cb) {}
+        }
+      });
+      createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.25' }, reservationGateway : reservationGateway });
+      scope.booking.name = 'Linea Vega';
+      scope.booking.email = 'like.you.would.like.to.know@would.you.not.com';
+      scope.booking.quantity = 3;
+      
+      scope.save();
+
+      expect(scope.isReceipt).toBeTruthy();
+    });
   })
 });
