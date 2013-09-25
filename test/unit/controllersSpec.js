@@ -75,32 +75,57 @@ describe('controllers', function(){
   });
 
   describe('BookController', function() {
+    var reservationGateway;
+    beforeEach(function() {
+      reservationGateway = { makeReservation : function() {} };
+      //module(function($provide) {
+      //  $provide.value('reservationGateway', reservationGateway);
+      //});
+    });
 
   	it('should set the correct booking date', function() {
   	  var dateText = '2013.09.20';
-  	  createController('BookController', { $scope : scope, $routeParams : { dateText : dateText }});
+  	  createController('BookController', { $scope : scope, $routeParams : { dateText : dateText }, reservationGateway : reservationGateway });
   	  expect(scope.booking.date).toEqual(dateText);
   	});
 
   	it('should set receipt flag to false initially', function() {
-  	  createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.20' }});
+  	  createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.20' }, reservationGateway : reservationGateway });
   	  expect(scope.isReceipt).toBeFalsy();
   	});
 
   	it('should set receipt flag to true upon save', function() {
-  	  createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.20' }});
+  	  createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.20' }, reservationGateway : reservationGateway });
   	  scope.save();
   	  expect(scope.isReceipt).toBeTruthy();
   	});
 
   	it('should contain a seats list with at least a zero', function() {
-  	  createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.20' }});
+  	  createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.20' }, reservationGateway : reservationGateway });
   	  expect(scope.seats).toContain(0);
   	});
 
   	it('should have a default quantity', function() {
-  	  createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.20' }});
+  	  createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.20' }, reservationGateway : reservationGateway });
   	  expect(scope.booking.quantity).toEqual(0);
-  	})
+  	});
+
+    it('should make reservation on gateway upon save', function() {
+      spyOn(reservationGateway, 'makeReservation');
+      createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.25' }, reservationGateway : reservationGateway });
+      scope.booking.name = 'Linea Vega';
+      scope.booking.email = 'like.you.would.like.to.know@would.you.com';
+      scope.booking.quantity = 2;
+      
+      scope.save();
+
+      var expected = {
+        date: scope.booking.date,
+        name: scope.booking.name,
+        email: scope.booking.email,
+        quantity: scope.booking.quantity
+      };
+      expect(reservationGateway.makeReservation).toHaveBeenCalledWith(expected);
+    })
   })
 });
