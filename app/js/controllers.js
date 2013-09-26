@@ -41,6 +41,9 @@ angular.module('bookingApp.controllers', []).
   	  	$scope.$apply();
   	  }
   	});
+
+    var today = new Date();
+    $scope.changeMonthYear(today.getFullYear(), today.getMonth() + 1);
   }).
 
   controller('BookController', function($scope, $routeParams, reservationGateway) {

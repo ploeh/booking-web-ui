@@ -26,18 +26,20 @@ describe('controllers', function(){
   });
 
   describe('HomeController', function() {
-  	var datepickerFunction;
-	beforeEach(function() {
-      datepickerFunction = $.fn.datepicker;
-	});
-	afterEach(function() {
-	  $.fn.datepicker = datepickerFunction;
-	});
+    var availabilityGateway;
+    var datepickerFunction;
+  	beforeEach(inject(function($q) {
+        datepickerFunction = $.fn.datepicker;
+        availabilityGateway = { getAvailabilityForMonth: jasmine.createSpy('getAvailabilityForMonth').andReturn($q.defer().promise) };
+  	}));
+  	afterEach(function() {
+  	  $.fn.datepicker = datepickerFunction;
+  	});
 
   	it('should invoke the datepicker method', function() {
       inject(function($location) {
         spyOn($.fn, 'datepicker').andCallThrough();
-        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : {} });
+        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
         expect($.fn.datepicker).toHaveBeenCalled();
       })
     });
@@ -45,7 +47,7 @@ describe('controllers', function(){
     it('should invoke datepicker with an onSelect function', function() {
       inject(function($location) {
         spyOn($.fn, 'datepicker').andCallThrough();
-        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : {} });
+        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
         expect($.fn.datepicker.mostRecentCall.args[0].onSelect).toBeDefined();
       })
     });
@@ -57,7 +59,7 @@ describe('controllers', function(){
         spyOn(scope, '$apply').andCallThrough();
         var dateText = '2013.09.28';
         
-        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : {} });
+        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
         $.fn.datepicker.mostRecentCall.args[0].onSelect(dateText);
 
         expect($location.path).toHaveBeenCalledWith('/book/' + dateText);
@@ -67,7 +69,7 @@ describe('controllers', function(){
 
     it('should initially have no days enabled for the month', function() {
       inject(function($location) {
-        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : {} });
+        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
         expect(scope.enabledDays).toEqual([]);
       })
     })
@@ -76,7 +78,7 @@ describe('controllers', function(){
       inject(function($location) {
         spyOn($.fn, 'datepicker').andCallThrough();
 
-        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : {} });
+        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
 
         expect($.fn.datepicker.mostRecentCall.args[0].beforeShowDay).toBeDefined();
         expect($.fn.datepicker.mostRecentCall.args[0].beforeShowDay instanceof Function).toBeTruthy();
@@ -86,7 +88,7 @@ describe('controllers', function(){
     it('should have the correct beforeShowDay function', function() {
       inject(function($location) {
         spyOn($.fn, 'datepicker').andCallThrough();
-        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : {} });
+        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
         expect($.fn.datepicker.mostRecentCall.args[0].beforeShowDay).toBe(scope.getStatusForDay);
       })
     })
@@ -94,7 +96,7 @@ describe('controllers', function(){
     describe('getStatusForDay', function() {
       it('should return false when no days are enabled', function() {
         inject(function($location) {
-          createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : {} });
+          createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
           var actual = scope.getStatusForDay(new Date());
           expect(actual).toEqual([false]);
         })
@@ -102,7 +104,7 @@ describe('controllers', function(){
 
       it('should return true when the day is enabled', function() {
         inject(function($location) {
-          createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : {} });
+          createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
           scope.enabledDays = ['2013.09.26'];
 
           var actual = scope.getStatusForDay(new Date(2013, 8, 26));
@@ -113,7 +115,7 @@ describe('controllers', function(){
 
       it('should return true when the day is one of the enabled days', function() {
         inject(function($location) {
-          createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : {} });
+          createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
           scope.enabledDays = ['2013.09.22', '2013.09.24'];
 
           var actual = scope.getStatusForDay(new Date(2013, 8, 24));
@@ -127,7 +129,7 @@ describe('controllers', function(){
       inject(function($location) {
         spyOn($.fn, 'datepicker').andCallThrough();
 
-        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : {} });
+        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
 
         expect($.fn.datepicker.mostRecentCall.args[0].onChangeMonthYear).toBeDefined();
         expect($.fn.datepicker.mostRecentCall.args[0].onChangeMonthYear instanceof Function).toBeTruthy();        
@@ -137,7 +139,7 @@ describe('controllers', function(){
     it('should have the correct onChangeMonthYear function', function() {
       inject(function($location) {
         spyOn($.fn, 'datepicker').andCallThrough();
-        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : {} });
+        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
         expect($.fn.datepicker.mostRecentCall.args[0].onChangeMonthYear).toBe(scope.changeMonthYear)
       })
     })
@@ -145,8 +147,8 @@ describe('controllers', function(){
     describe('changeMonthYear', function() {
       it('should correctly assign populated enabledDays', inject(function($location, $q, $rootScope) {
         var deferred = $q.defer();
-        var availabilityGateway = { getAvailabilityForMonth: jasmine.createSpy('getAvailabilityForMonth').andReturn(deferred.promise) };
-        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
+        var stub = { getAvailabilityForMonth: jasmine.createSpy('getAvailabilityForMonth').andReturn(deferred.promise) };
+        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : stub });
 
         scope.changeMonthYear(2013, 8);
         deferred.resolve([ { date: '2013.09.26', seats: 1 }, { date: '2013.09.27', seats: 2 } ]);
@@ -157,8 +159,8 @@ describe('controllers', function(){
 
       it('should only assign available days to enabledDays', inject(function($location, $q, $rootScope) {
         var deferred = $q.defer();
-        var availabilityGateway = { getAvailabilityForMonth: jasmine.createSpy('getAvailabilityForMonth').andReturn(deferred.promise) };
-        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
+        var stub = { getAvailabilityForMonth: jasmine.createSpy('getAvailabilityForMonth').andReturn(deferred.promise) };
+        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : stub });
 
         scope.changeMonthYear(2013, 7);
         deferred.resolve([ { date: '2013.08.01', seats: 1 }, { date: '2013.08.02', seats: 0 }, { date: '2013.08.03', seats: 4 } ]);
@@ -170,8 +172,8 @@ describe('controllers', function(){
       it('should refresh datepicker upon success', inject(function($location, $q, $rootScope) {
         spyOn($.fn, 'datepicker').andCallThrough();
         var deferred = $q.defer();
-        var availabilityGateway = { getAvailabilityForMonth: jasmine.createSpy('getAvailabilityForMonth').andReturn(deferred.promise) };
-        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
+        var stub = { getAvailabilityForMonth: jasmine.createSpy('getAvailabilityForMonth').andReturn(deferred.promise) };
+        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : stub });
 
         scope.changeMonthYear(2013, 6);
         deferred.resolve([]);
@@ -181,10 +183,23 @@ describe('controllers', function(){
       }))
     })
 
+    it('should assign populated days upon initialization', inject(function($location, $q, $rootScope) {
+      var deferred = $q.defer();
+      var stub = { getAvailabilityForMonth: jasmine.createSpy('getAvailabilityForMonth').andReturn(deferred.promise) };
+      
+      createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : stub });
+      deferred.resolve([ { date: '2013.08.01', seats: 1 }, { date: '2013.08.02', seats: 0 }, { date: '2013.08.03', seats: 4 } ]);
+      $rootScope.$apply();
+
+      var today = new Date();
+      expect(stub.getAvailabilityForMonth).toHaveBeenCalledWith(today.getFullYear(), today.getMonth() + 1);
+      expect(scope.enabledDays).toEqual([ '2013.08.01', '2013.08.03' ]);
+    }))
+
     it('should invoke datepicker with the correct date format', function() {
       inject(function($location) {
         spyOn($.fn, 'datepicker').andCallThrough();
-        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : {} });
+        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
         expect($.fn.datepicker.mostRecentCall.args[0].dateFormat).toEqual('yy.mm.dd');
       })
     });
