@@ -71,47 +71,47 @@ describe('service', function() {
       it('exists as a property', function() {
         expect(sut.getAvailabilityForMonth).toBeDefined();
       })
-    })
 
-    it('is a function', function() {
-      expect(sut.getAvailabilityForMonth instanceof Function).toBeTruthy();
-    })
-
-    it('returns correct result', inject(function($httpBackend) {
-      var expected = [ { date: '2013.09.01', seats: 0 }, { date: '2013.09.02', seats: 1}, { date: '2013.09.03', seats: 2 } ];
-      $httpBackend.expectGET('availability/2013/9').respond({ openings: expected });
-
-      var actual;
-      sut.getAvailabilityForMonth(2013, 9).then(function(data) {
-        actual = data;
+      it('is a function', function() {
+        expect(sut.getAvailabilityForMonth instanceof Function).toBeTruthy();
       })
-      $httpBackend.flush();
 
-      expect(actual).toEqual(expected);
-    }))
+      it('returns correct result', inject(function($httpBackend) {
+        var expected = [ { date: '2013.09.01', seats: 0 }, { date: '2013.09.02', seats: 1}, { date: '2013.09.03', seats: 2 } ];
+        $httpBackend.expectGET('availability/2013/9').respond({ openings: expected });
 
-    it('does not return anything upon HTTP error', inject(function($httpBackend) {
-      $httpBackend.expectGET('availability/2014/10').respond(500);
+        var actual;
+        sut.getAvailabilityForMonth(2013, 9).then(function(data) {
+          actual = data;
+        })
+        $httpBackend.flush();
 
-      var actual;
-      sut.getAvailabilityForMonth(2014, 10).then(function(data) {
-        actual = data;
-      })
-      $httpBackend.flush();
+        expect(actual).toEqual(expected);
+      }))
 
-      expect(actual).not.toBeDefined();
-    }))
+      it('does not return anything upon HTTP error', inject(function($httpBackend) {
+        $httpBackend.expectGET('availability/2014/10').respond(500);
 
-    it('rejects on HTTP error', inject(function($httpBackend) {
-      $httpBackend.expectGET('availability/2012/1').respond(500);
+        var actual;
+        sut.getAvailabilityForMonth(2014, 10).then(function(data) {
+          actual = data;
+        })
+        $httpBackend.flush();
 
-      var actual;
-      sut.getAvailabilityForMonth(2012, 1).then(
-        function(data) {},
-        function() { actual = true; });
-      $httpBackend.flush();
+        expect(actual).not.toBeDefined();
+      }))
 
-      expect(actual).toBeTruthy();
-    }))
+      it('rejects on HTTP error', inject(function($httpBackend) {
+        $httpBackend.expectGET('availability/2012/1').respond(500);
+
+        var actual;
+        sut.getAvailabilityForMonth(2012, 1).then(
+          function(data) {},
+          function() { actual = true; });
+        $httpBackend.flush();
+
+        expect(actual).toBeTruthy();
+      }))
+    })    
   })
 });
