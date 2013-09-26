@@ -46,10 +46,17 @@ angular.module('bookingApp.controllers', []).
     $scope.changeMonthYear(today.getFullYear(), today.getMonth() + 1);
   }).
 
-  controller('BookController', function($scope, $routeParams, reservationGateway) {
+  controller('BookController', function($scope, $routeParams, availabilityGateway, reservationGateway) {
   	$scope.booking = { date : $routeParams.dateText, quantity : 0 };
 
   	$scope.seats = [0];
+    var date = $.datepicker.parseDate('yy.mm.dd', $routeParams.dateText);
+    availabilityGateway.getAvailabilityForDay(date.getFullYear(), date.getMonth() + 1, date.getDate()).then(
+      function(data) {
+        for (var i = data.seats; i >= 0; i--) {
+          $scope.seats[i] = i;
+        };
+      })
 
     $scope.isReceipt = false;
 
