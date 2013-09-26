@@ -64,6 +64,13 @@ describe('controllers', function(){
         expect(scope.$apply).toHaveBeenCalled();
       })
     });
+
+    it('should initially have no days enabled for the month', function() {
+      inject(function($location) {
+        createController('HomeController', { $scope : scope, $location : $location });
+        expect(scope.enabledDays).toEqual([]);
+      })
+    })
   });
 
   it('should invoke datepicker with the correct date format', function() {

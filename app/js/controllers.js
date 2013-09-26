@@ -12,6 +12,8 @@ angular.module('bookingApp.controllers', []).
   }).
 
   controller('HomeController', function($scope, $location) {
+    $scope.enabledDays = [];
+
   	$("#datepicker").datepicker({
   	  dateFormat : 'yy.mm.dd',
   	  onSelect : function(dateText, inst) {
