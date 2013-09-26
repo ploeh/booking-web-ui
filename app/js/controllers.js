@@ -11,7 +11,7 @@ angular.module('bookingApp.controllers', []).
   	};
   }).
 
-  controller('HomeController', function($scope, $location) {
+  controller('HomeController', function($scope, $location, availabilityGateway) {
     $scope.enabledDays = [];
 
     $scope.dateFormat = 'yy.mm.dd';
@@ -21,7 +21,13 @@ angular.module('bookingApp.controllers', []).
       return [$.inArray(formattedDate, $scope.enabledDays) !== -1];
     };
 
-    $scope.changeMonthYear = function() {};
+    $scope.changeMonthYear = function(year, month) {
+      availabilityGateway.getAvailabilityForMonth(year, month).
+        then(function(data) {
+          var days = data.map(function(d) { return d.date });
+          $scope.enabledDays = days;
+        })
+    };
 
   	$("#datepicker").datepicker({
   	  dateFormat : $scope.dateFormat,
