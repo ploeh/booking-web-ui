@@ -123,6 +123,25 @@ describe('controllers', function(){
       })
     })
 
+    it('should invoke datepicker with a onChangeMonthYear function', function() {
+      inject(function($location) {
+        spyOn($.fn, 'datepicker').andCallThrough();
+
+        createController('HomeController', { $scope : scope, $location : $location });
+
+        expect($.fn.datepicker.mostRecentCall.args[0].onChangeMonthYear).toBeDefined();
+        expect($.fn.datepicker.mostRecentCall.args[0].onChangeMonthYear instanceof Function).toBeTruthy();        
+      })
+    })
+
+    it('should have the correct onChangeMonthYear function', function() {
+      inject(function($location) {
+        spyOn($.fn, 'datepicker').andCallThrough();
+        createController('HomeController', { $scope : scope, $location : $location });
+        expect($.fn.datepicker.mostRecentCall.args[0].onChangeMonthYear).toBe(scope.changeMonthYear)
+      })
+    })
+
     it('should invoke datepicker with the correct date format', function() {
       inject(function($location) {
         spyOn($.fn, 'datepicker').andCallThrough();

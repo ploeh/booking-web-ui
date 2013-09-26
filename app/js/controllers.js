@@ -21,9 +21,12 @@ angular.module('bookingApp.controllers', []).
       return [$.inArray(formattedDate, $scope.enabledDays) !== -1];
     };
 
+    $scope.changeMonthYear = function() {};
+
   	$("#datepicker").datepicker({
   	  dateFormat : $scope.dateFormat,
       beforeShowDay : $scope.getStatusForDay,
+      onChangeMonthYear : $scope.changeMonthYear,
   	  onSelect : function(dateText, inst) {
   	  	$location.path('/book/' + dateText);
   	  	$scope.$apply();
