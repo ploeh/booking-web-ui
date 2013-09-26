@@ -154,6 +154,18 @@ describe('controllers', function(){
 
         expect(scope.enabledDays).toEqual([ '2013.09.26', '2013.09.27' ]);
       }))
+
+      it('should only assign available days to enabledDays', inject(function($location, $q, $rootScope) {
+        var deferred = $q.defer();
+        var availabilityGateway = { getAvailabilityForMonth: jasmine.createSpy('getAvailabilityForMonth').andReturn(deferred.promise) };
+        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
+
+        scope.changeMonthYear(2013, 7);
+        deferred.resolve([ { date: '2013.08.01', seats: 1 }, { date: '2013.08.02', seats: 0 }, { date: '2013.08.03', seats: 4 } ]);
+        $rootScope.$apply();
+
+        expect(scope.enabledDays).toEqual([ '2013.08.01', '2013.08.03' ]);
+      }))
     })
 
     it('should invoke datepicker with the correct date format', function() {

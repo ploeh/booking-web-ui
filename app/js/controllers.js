@@ -24,7 +24,9 @@ angular.module('bookingApp.controllers', []).
     $scope.changeMonthYear = function(year, month) {
       availabilityGateway.getAvailabilityForMonth(year, month).
         then(function(data) {
-          var days = data.map(function(d) { return d.date });
+          var days = data.
+            filter(function(d) { return d.seats > 0 }).
+            map(function(d) { return d.date });
           $scope.enabledDays = days;
         })
     };
