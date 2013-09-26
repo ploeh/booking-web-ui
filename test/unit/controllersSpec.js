@@ -143,7 +143,7 @@ describe('controllers', function(){
     })
 
     describe('changeMonthYear', function() {
-      it('should correctly assign populate enabledDays', inject(function($location, $q, $rootScope) {
+      it('should correctly assign populated enabledDays', inject(function($location, $q, $rootScope) {
         var deferred = $q.defer();
         var availabilityGateway = { getAvailabilityForMonth: jasmine.createSpy('getAvailabilityForMonth').andReturn(deferred.promise) };
         createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
@@ -165,6 +165,19 @@ describe('controllers', function(){
         $rootScope.$apply();
 
         expect(scope.enabledDays).toEqual([ '2013.08.01', '2013.08.03' ]);
+      }))
+
+      it('should refresh datepicker upon success', inject(function($location, $q, $rootScope) {
+        spyOn($.fn, 'datepicker').andCallThrough();
+        var deferred = $q.defer();
+        var availabilityGateway = { getAvailabilityForMonth: jasmine.createSpy('getAvailabilityForMonth').andReturn(deferred.promise) };
+        createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
+
+        scope.changeMonthYear(2013, 6);
+        deferred.resolve([]);
+        $rootScope.$apply();
+
+        expect($.fn.datepicker).toHaveBeenCalledWith('refresh');
       }))
     })
 

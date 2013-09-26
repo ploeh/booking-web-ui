@@ -28,10 +28,11 @@ angular.module('bookingApp.controllers', []).
             filter(function(d) { return d.seats > 0 }).
             map(function(d) { return d.date });
           $scope.enabledDays = days;
+          $('#datepicker').datepicker('refresh');
         })
     };
 
-  	$("#datepicker").datepicker({
+  	$('#datepicker').datepicker({
   	  dateFormat : $scope.dateFormat,
       beforeShowDay : $scope.getStatusForDay,
       onChangeMonthYear : $scope.changeMonthYear,
