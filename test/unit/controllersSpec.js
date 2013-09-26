@@ -95,8 +95,19 @@ describe('controllers', function(){
       it('should return false when no days are enabled', function() {
         inject(function($location) {
           createController('HomeController', { $scope : scope, $location : $location });
-          var actual = scope.getStatusForDay(Date());
+          var actual = scope.getStatusForDay(new Date());
           expect(actual).toEqual([false]);
+        })
+      })
+
+      it('should return true when the day is enable', function() {
+        inject(function($location) {
+          createController('HomeController', { $scope : scope, $location : $location });
+          scope.enabledDays = ['2013.09.26'];
+
+          var actual = scope.getStatusForDay(new Date(2013, 8, 26));
+
+          expect(actual).toEqual([true]);
         })
       })
     })

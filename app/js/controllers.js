@@ -14,12 +14,19 @@ angular.module('bookingApp.controllers', []).
   controller('HomeController', function($scope, $location) {
     $scope.enabledDays = [];
 
-    $scope.getStatusForDay = function() {
+    $scope.dateFormat = 'yy.mm.dd';
+
+    $scope.getStatusForDay = function(date) {
+      var formattedDate = $.datepicker.formatDate($scope.dateFormat, date);
+      if($scope.enabledDays[0] === formattedDate)
+      {
+        return [true];
+      }
       return [false];
     };
 
   	$("#datepicker").datepicker({
-  	  dateFormat : 'yy.mm.dd',
+  	  dateFormat : $scope.dateFormat,
       beforeShowDay : $scope.getStatusForDay,
   	  onSelect : function(dateText, inst) {
   	  	$location.path('/book/' + dateText);
