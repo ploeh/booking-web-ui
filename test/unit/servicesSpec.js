@@ -112,6 +112,41 @@ describe('service', function() {
 
         expect(actual).toBeTruthy();
       }))
+    })
+
+    describe('get availability for a day', function() {
+      it('exists as a property', function() {
+        expect(sut.getAvailabilityForDay).toBeDefined();
+      })
+
+      it('is a function', function() {
+        expect(sut.getAvailabilityForDay instanceof Function).toBeTruthy();
+      })
+
+      it('returns correct result', inject(function($httpBackend) {
+        var expected = { date: '2013.04.24', seats: 8 };
+        $httpBackend.expectGET('availability/2013/4/24').respond({ openings: [ expected ] });
+
+        var actual;
+        sut.getAvailabilityForDay(2013, 4, 24).then(function(data) {
+          actual = data;
+        })
+        $httpBackend.flush();
+
+        expect(actual).toEqual(expected);
+      }))
+
+      it('rejects on HTTP error', inject(function($httpBackend) {
+        $httpBackend.expectGET('availability/2012/3/11').respond(500);
+
+        var actual;
+        sut.getAvailabilityForDay(2012, 3, 11).then(
+          function(data) {},
+          function() { actual = true; });
+        $httpBackend.flush();
+
+        expect(actual).toBeTruthy();
+      }))
     })    
   })
 });

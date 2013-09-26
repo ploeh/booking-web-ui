@@ -24,7 +24,18 @@ angular.module('bookingApp.services', []).
           success(function(data) {
             deferred.resolve(data.openings);
           }).
-          error(function(){
+          error(function() {
+            deferred.reject();
+          });
+        return deferred.promise;
+      },
+      getAvailabilityForDay : function(year, month, day) {
+        var deferred = $q.defer();
+        $http.get('availability/' + year + '/' + month + '/' + day).
+          success(function(data) {
+            deferred.resolve(data.openings[0]);
+          }).
+          error(function() {
             deferred.reject();
           });
         return deferred.promise;
