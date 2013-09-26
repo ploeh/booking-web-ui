@@ -71,14 +71,43 @@ describe('controllers', function(){
         expect(scope.enabledDays).toEqual([]);
       })
     })
-  });
 
-  it('should invoke datepicker with the correct date format', function() {
-	inject(function($location) {
-	  spyOn($.fn, 'datepicker').andCallThrough();
-	  createController('HomeController', { $scope : scope, $location : $location });
-	  expect($.fn.datepicker.mostRecentCall.args[0].dateFormat).toEqual('yy.mm.dd');
-	})
+    it('should invoke datepicker with a beforeShowDay function', function() {
+      inject(function($location) {
+        spyOn($.fn, 'datepicker').andCallThrough();
+
+        createController('HomeController', { $scope : scope, $location : $location });
+
+        expect($.fn.datepicker.mostRecentCall.args[0].beforeShowDay).toBeDefined();
+        expect($.fn.datepicker.mostRecentCall.args[0].beforeShowDay instanceof Function).toBeTruthy();
+      })
+    })
+
+    it('should have the correct beforeShowDay function', function() {
+      inject(function($location) {
+        spyOn($.fn, 'datepicker').andCallThrough();
+        createController('HomeController', { $scope : scope, $location : $location });
+        expect($.fn.datepicker.mostRecentCall.args[0].beforeShowDay).toBe(scope.getStatusForDay);
+      })
+    })
+
+    describe('getStatusForDay', function() {
+      it('should return false when no days are enabled', function() {
+        inject(function($location) {
+          createController('HomeController', { $scope : scope, $location : $location });
+          var actual = scope.getStatusForDay(Date());
+          expect(actual).toEqual([false]);
+        })
+      })
+    })
+
+    it('should invoke datepicker with the correct date format', function() {
+      inject(function($location) {
+        spyOn($.fn, 'datepicker').andCallThrough();
+        createController('HomeController', { $scope : scope, $location : $location });
+        expect($.fn.datepicker.mostRecentCall.args[0].dateFormat).toEqual('yy.mm.dd');
+      })
+    });
   });
 
   describe('BookController', function() {
