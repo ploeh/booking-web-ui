@@ -33,6 +33,7 @@ angular.module('bookingApp.controllers', []).
     };
 
   	$('#datepicker').datepicker({
+      firstDay : 1,
   	  dateFormat : $scope.dateFormat,
       beforeShowDay : $scope.getStatusForDay,
       onChangeMonthYear : $scope.changeMonthYear,

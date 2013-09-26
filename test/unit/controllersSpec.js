@@ -203,6 +203,12 @@ describe('controllers', function(){
         expect($.fn.datepicker.mostRecentCall.args[0].dateFormat).toEqual('yy.mm.dd');
       })
     });
+
+    it('should invoke datepicker with the correct first day', inject(function($location) {
+      spyOn($.fn, 'datepicker').andCallThrough();
+      createController('HomeController', { $scope : scope, $location : $location, availabilityGateway : availabilityGateway });
+      expect($.fn.datepicker.mostRecentCall.args[0].firstDay).toEqual(1);
+    }))
   });
 
   describe('BookController', function() {
