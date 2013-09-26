@@ -100,12 +100,23 @@ describe('controllers', function(){
         })
       })
 
-      it('should return true when the day is enable', function() {
+      it('should return true when the day is enabled', function() {
         inject(function($location) {
           createController('HomeController', { $scope : scope, $location : $location });
           scope.enabledDays = ['2013.09.26'];
 
           var actual = scope.getStatusForDay(new Date(2013, 8, 26));
+
+          expect(actual).toEqual([true]);
+        })
+      })
+
+      it('should return true when the day is one of the enabled days', function() {
+        inject(function($location) {
+          createController('HomeController', { $scope : scope, $location : $location });
+          scope.enabledDays = ['2013.09.22', '2013.09.24'];
+
+          var actual = scope.getStatusForDay(new Date(2013, 8, 24));
 
           expect(actual).toEqual([true]);
         })

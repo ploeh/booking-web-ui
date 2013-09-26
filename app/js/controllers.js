@@ -18,8 +18,7 @@ angular.module('bookingApp.controllers', []).
 
     $scope.getStatusForDay = function(date) {
       var formattedDate = $.datepicker.formatDate($scope.dateFormat, date);
-      if($scope.enabledDays[0] === formattedDate)
-      {
+      if ($.inArray(formattedDate, $scope.enabledDays) !== -1) {
         return [true];
       }
       return [false];
