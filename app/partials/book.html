@@ -7,7 +7,7 @@
 			Name: <input type="text" ng-model="booking.name" /><br />
 			Email: <input type="email" ng-model="booking.email" /><br />
 			Quantity: <select ng-model="booking.quantity" ng-options="seat for seat in seats"></select><br />
-			<input type="submit" id="save" value="Save" />
+			<input type="submit" id="save" value="Save" ng-disabled="booking.quantity <= 0" />
 		</fieldset>
 	</form>
 </div>
