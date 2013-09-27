@@ -50,13 +50,13 @@ describe('service', function() {
   	  	};
   	  	$httpBackend.expectPOST('reservationrequests', reservationRequest).respond(202);
 
-  	  	var actual;
-  	  	sut.makeReservation(reservationRequest).success(function(data, status, headers) {
-  	  	  actual = status;
+  	  	var success;
+  	  	sut.makeReservation(reservationRequest).then(function(data, status) {
+  	  	  success = true;
     		});
     		$httpBackend.flush();
 
-    		expect(actual).toEqual(202);
+    		expect(success).toBeTruthy();
   	  }));
   	})
   })

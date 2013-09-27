@@ -216,14 +216,7 @@ describe('controllers', function(){
     var reservationGateway;
     beforeEach(inject(function($q) {
       availabilityGateway = { getAvailabilityForDay : jasmine.createSpy('getAvailabilityForDay').andReturn($q.defer().promise) };
-      reservationGateway = {
-        makeReservation: jasmine.createSpy('makeReservation').andCallFake(function() {
-          return {
-            success: function() {},
-            error: function(){}
-          }
-        })
-      }
+      reservationGateway = { makeReservation: jasmine.createSpy('makeReservation').andReturn($q.defer().promise) };
     }));
 
   	it('should set the correct booking date', function() {
@@ -275,38 +268,34 @@ describe('controllers', function(){
       expect(reservationGateway.makeReservation).toHaveBeenCalledWith(expected);
     });
 
-    it('should not set isReceipt to true upon gateway failure', function() {
-      reservationGateway.makeReservation.andCallFake(function() {
-        return {
-          success: function(cb) {},
-          error: function(cb) { cb(); }
-        }
-      });
-      createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.25' }, reservationGateway : reservationGateway, availabilityGateway : availabilityGateway });
+    it('should not set isReceipt to true upon gateway failure', inject(function($q, $rootScope) {
+      var deferred = $q.defer();
+      var stub = { makeReservation: jasmine.createSpy('makeReservation').andReturn(deferred.promise) };
+      createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.25' }, reservationGateway : stub, availabilityGateway : availabilityGateway });
       scope.booking.name = 'Linea Vega';
       scope.booking.email = 'like.you.would.like.to.know@would.you.not.com';
       scope.booking.quantity = 3;
       
       scope.save();
+      deferred.reject();
+      $rootScope.$apply();
 
       expect(scope.isReceipt).toBeFalsy();
-    });
+    }));
 
-    it('should not set isReceipt to true upon gateway failure', function() {
-      reservationGateway.makeReservation.andCallFake(function() {
-        return {
-          success: function(cb) { cb(); },
-          error: function(cb) {}
-        }
-      });
-      createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.25' }, reservationGateway : reservationGateway, availabilityGateway : availabilityGateway });
+    it('should not set isReceipt to true upon gateway failure', inject(function($q, $rootScope) {
+      var deferred = $q.defer();
+      var stub = { makeReservation: jasmine.createSpy('makeReservation').andReturn(deferred.promise) };
+      createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.25' }, reservationGateway : stub, availabilityGateway : availabilityGateway });
       scope.booking.name = 'Linea Vega';
       scope.booking.email = 'like.you.would.like.to.know@would.you.not.com';
       scope.booking.quantity = 3;
       
       scope.save();
+      deferred.resolve();
+      $rootScope.$apply();
 
       expect(scope.isReceipt).toBeTruthy();
-    });
+    }));
   })
 });

@@ -68,7 +68,7 @@ angular.module('bookingApp.controllers', []).
         email: $scope.booking.email,
         quantity: $scope.booking.quantity
       }).
-      success(function() {
+      then(function() {
         $scope.isReceipt = true;
       });
   	};

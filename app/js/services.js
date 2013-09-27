@@ -8,10 +8,18 @@
 angular.module('bookingApp.services', []).
   value('version', '0.1').
 
-  factory('reservationGateway', function($http) {
+  factory('reservationGateway', function($http, $q) {
   	return {
-  	  makeReservation : function(reservationRequest){
-  	  	return $http.post('reservationrequests', reservationRequest);
+  	  makeReservation : function(reservationRequest) {
+        var deferred = $q.defer();
+  	  	$http.post('reservationrequests', reservationRequest).
+          success(function() {
+            deferred.resolve();
+          }).
+          error(function() {
+            deferred.reject();
+          });
+        return deferred.promise;
   	  }
   	}
   }).
