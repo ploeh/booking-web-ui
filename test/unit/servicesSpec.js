@@ -5,13 +5,6 @@
 describe('service', function() {
   beforeEach(module('bookingApp.services'));
 
-
-  describe('version', function() {
-    it('should return current version', inject(function(version) {
-      expect(version).toEqual('0.1');
-    }));
-  });
-
   describe('reservationGateway', function() {
   	var sut;
   	beforeEach(inject(function(reservationGateway) {
