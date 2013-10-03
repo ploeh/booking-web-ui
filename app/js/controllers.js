@@ -68,8 +68,9 @@ angular.module('bookingApp.controllers', []).
         email: $scope.booking.email,
         quantity: $scope.booking.quantity
       }).
-      then(function() {
+      then(function(data) {
         $scope.isReceipt = true;
+        $scope.addNotificationAddress(data);
       });
   	};
   }).

@@ -283,9 +283,10 @@ describe('controllers', function(){
       expect(scope.isReceipt).toBeFalsy();
     }));
 
-    it('should not set isReceipt to true upon gateway failure', inject(function($q, $rootScope) {
+    it('should set isReceipt to true upon gateway success', inject(function($q, $rootScope) {
       var deferred = $q.defer();
       var stub = { makeReservation: jasmine.createSpy('makeReservation').andReturn(deferred.promise) };
+      scope.addNotificationAddress = jasmine.createSpy('addNotificationAddress');
       createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.25' }, reservationGateway : stub, availabilityGateway : availabilityGateway });
       scope.booking.name = 'Linea Vega';
       scope.booking.email = 'like.you.would.like.to.know@would.you.not.com';
@@ -296,6 +297,19 @@ describe('controllers', function(){
       $rootScope.$apply();
 
       expect(scope.isReceipt).toBeTruthy();
+    }));
+
+    it('should add notification address upon success', inject(function($q, $rootScope) {
+      var deferred = $q.defer();
+      var stub = { makeReservation: jasmine.createSpy('makeReservation').andReturn(deferred.promise) };
+      scope.addNotificationAddress = jasmine.createSpy('addNotificationAddress');
+      createController('BookController', { $scope : scope, $routeParams : { dateText : '2013.09.25' }, reservationGateway : stub, availabilityGateway : availabilityGateway });
+
+      scope.save();
+      deferred.resolve('foo');
+      $rootScope.$apply();
+
+      expect(scope.addNotificationAddress).toHaveBeenCalledWith('foo');
     }));
   })
 });
