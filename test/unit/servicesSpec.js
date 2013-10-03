@@ -142,4 +142,33 @@ describe('service', function() {
       }))
     })    
   })
+
+  describe('NotificationGateway', function() {
+    var sut;
+    beforeEach(inject(function(notificationGateway) {
+      sut = notificationGateway;
+    }))
+
+    describe('get notification for an ID', function() {
+      it('exists as a property', function() {
+        expect(sut.getNotification).toBeDefined();
+      })
+
+      it('is a function', function() {
+        expect(sut.getNotification instanceof Function).toBeTruthy();
+      })
+
+      it('returns correct result when there are no notifications on back-end', inject(function($httpBackend) {
+        var url = 'notifications/5BD3E3C8FC5E4FC4A54C11283C4531BF';
+        $httpBackend.expectGET(url).respond({ notifications: [] });
+
+        var actual;
+        sut.getNotification(url).then(function(data) {
+          actual = data;
+        })
+        $httpBackend.flush();
+        expect(actual).toEqual([]);
+      }))
+    })
+  })
 });

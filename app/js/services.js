@@ -45,4 +45,17 @@ angular.module('bookingApp.services', []).
         return deferred.promise;
       }
   	}
+  }).
+
+  factory('notificationGateway', function($http, $q) {
+    return {
+      getNotification : function(url) {
+        var deferred = $q.defer();
+        $http.get(url).
+          success(function(data) {
+            deferred.resolve([])
+          });
+        return deferred.promise;
+      }
+    }
   });
