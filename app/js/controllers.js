@@ -72,4 +72,8 @@ angular.module('bookingApp.controllers', []).
         $scope.isReceipt = true;
       });
   	};
+  }).
+
+  controller('NotificationsController', function() {
+
   });
