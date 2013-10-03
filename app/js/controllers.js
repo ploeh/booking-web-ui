@@ -75,12 +75,17 @@ angular.module('bookingApp.controllers', []).
   	};
   }).
 
-  controller('NotificationsController', function($scope, notificationGateway) {
+  controller('NotificationsController', function($scope, $timeout, notificationGateway) {
     $scope.pollUrls = [];
     $scope.notifications = [];
     
     $scope.addNotificationAddress = function(url) {
       $scope.pollUrls.push(url);
+    }
+
+    $scope.dismiss = function(notification) {
+      var index = $scope.notifications.indexOf(notification);
+      $scope.notifications.splice(index, 1);
     }
 
     $scope.pollOnce = function() {
@@ -97,8 +102,12 @@ angular.module('bookingApp.controllers', []).
       };
     }
 
-    $scope.dismiss = function(notification) {
-      var index = $scope.notifications.indexOf(notification);
-      $scope.notifications.splice(index, 1);
+    $scope.poll = function() {
+      $timeout(function() {
+        $scope.pollOnce();
+        $scope.poll();
+      }, 5000);
     }
+
+    $scope.poll();
   });
