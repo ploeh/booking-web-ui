@@ -369,6 +369,7 @@ describe('controllers', function(){
 
         expect(stub.getNotification).toHaveBeenCalledWith('notifications/ploeh');
         expect(scope.notifications).toEqual([ { about: '1D5DAE201ECE4EBAAF536C75ADF30CC1', type: 'success', message: 'ploeh' } ]);
+        expect(scope.pollUrls).toEqual([]);
       }))
     })
   })
