@@ -372,5 +372,26 @@ describe('controllers', function(){
         expect(scope.pollUrls).toEqual([]);
       }))
     })
+
+    describe('dismiss', function() {
+      it('exists as a property', inject(function() {
+        createController('NotificationsController', { $scope : scope, notificationGateway : notificationGateway });
+        expect(scope.dismiss).toBeDefined();
+      }))
+
+      it('is a function', inject(function() {
+        createController('NotificationsController', { $scope : scope, notificationGateway : notificationGateway });
+        expect(scope.dismiss instanceof Function).toBeTruthy();
+      }))
+
+      it('removes the notification when invoked', inject(function() {
+        createController('NotificationsController', { $scope : scope, notificationGateway : notificationGateway });
+        scope.notifications = [ {about: '532E191BEE4C4FC9A4628FFD70402C01', type: 'success', message: 'fnaah' } ];
+
+        scope.dismiss({about: '532E191BEE4C4FC9A4628FFD70402C01', type: 'success', message: 'fnaah' });
+
+        expect(scope.notifications).toEqual([]);
+      }))
+    })
   })
 });

@@ -96,4 +96,9 @@ angular.module('bookingApp.controllers', []).
           })
       };
     }
+
+    $scope.dismiss = function(notification) {
+      var index = $scope.notifications.indexOf(notification);
+      $scope.notifications.splice(index, 1);
+    }
   });

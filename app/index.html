@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="css/jquery.ui.all.css">
 </head>
 <body ng-controller="NotificationsController">
-  <div ng-repeat="notification in notifications">{{notification.message}}</div>
+  <div ng-repeat="notification in notifications">{{notification.message}} <a href="" ng-click="dismiss(notification)">[x]</a></div>
 
   <ul class="menu" ng-controller="MenuController">
     <li><a href="#/home">home</a></li>
