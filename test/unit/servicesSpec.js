@@ -198,6 +198,19 @@ describe('service', function() {
 
         expect(actual).toEqual([expected]);
       }))
+
+      it('rejects on HTTP error', inject(function($httpBackend) {
+        var url = 'notifications/3D10A94E5D5043318AEC205900B10CFA';
+        $httpBackend.expectGET(url).respond(500);
+
+        var actual;
+        sut.getNotification(url).then(
+          function(data) {},
+          function() { actual = true; });
+        $httpBackend.flush();
+
+        expect(actual).toBeTruthy();
+      }))
     })
   })
 });

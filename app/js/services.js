@@ -57,6 +57,9 @@ angular.module('bookingApp.services', []).
               deferred.resolve([]);
             else
               deferred.resolve([data.notifications[0]])
+          }).
+          error(function() {
+            deferred.reject();
           });
         return deferred.promise;
       }
