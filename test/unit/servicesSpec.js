@@ -27,7 +27,9 @@ describe('service', function() {
   	  	  email: 'mark@ploeh.dk',
   	  	  quantity: 4
   	  	};
-  	  	$httpBackend.expectPOST('reservationrequests', reservationRequest).respond(202);
+        $httpBackend.
+          expectPOST('reservationrequests', reservationRequest).
+          respond(202, { links: [ { rel: 'http://ploeh.samples/notification', href: 'bar' } ] });
 
   	  	sut.makeReservation(reservationRequest);
 
@@ -41,15 +43,18 @@ describe('service', function() {
   	  	  email: 'jarl@ploeh.dk',
   	  	  quantity: 1
   	  	};
-  	  	$httpBackend.expectPOST('reservationrequests', reservationRequest).respond(202);
+        var expected = 'notifications/D18E69CF9B3F46D096AAB9E26F91335B'
+  	  	$httpBackend.
+          expectPOST('reservationrequests', reservationRequest).
+          respond(202, { links: [ { rel: 'http://ploeh.samples/notification', href: expected } ] });
 
-  	  	var success;
+  	  	var actual;
   	  	sut.makeReservation(reservationRequest).then(function(data, status) {
-  	  	  success = true;
+  	  	  actual = data;
     		});
     		$httpBackend.flush();
 
-    		expect(success).toBeTruthy();
+    		expect(actual).toEqual(expected);
   	  }));
   	})
   })
