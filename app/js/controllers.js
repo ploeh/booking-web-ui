@@ -88,11 +88,9 @@ angular.module('bookingApp.controllers', []).
         var url = $scope.pollUrls[i];
         notificationGateway.getNotification(url).
           then(function(data) {
-            for (var j = 0; j < data.length; j++) {
-              $scope.notifications.push(data[j]);
+            for (var j = 0; j < data.notifications.length; j++) {
+              $scope.notifications.push(data.notifications[j]);
             };
-
-            $scope.pollUrls.splice(i, 1);
           })
       };
     }

@@ -173,7 +173,7 @@ describe('service', function() {
         })
         $httpBackend.flush();
 
-        expect(actual).toEqual([]);
+        expect(actual).toEqual({ notifications: [], url: url });
       }))
 
       it('returns correct result when there is a single notification on back-end', inject(function($httpBackend) {
@@ -187,7 +187,7 @@ describe('service', function() {
         })
         $httpBackend.flush();
 
-        expect(actual).toEqual(expected);
+        expect(actual).toEqual({ notifications: expected, url: url });
       }))
 
       it('returns only the first notification from the back-end', inject(function($httpBackend) {
@@ -201,7 +201,7 @@ describe('service', function() {
         })
         $httpBackend.flush();
 
-        expect(actual).toEqual([expected]);
+        expect(actual).toEqual({ notifications: [expected], url: url });
       }))
 
       it('rejects on HTTP error', inject(function($httpBackend) {

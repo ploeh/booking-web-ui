@@ -364,7 +364,7 @@ describe('controllers', function(){
         scope.pollUrls = ['notifications/ploeh'];
 
         scope.pollOnce();
-        deferred.resolve([ { about: '1D5DAE201ECE4EBAAF536C75ADF30CC1', type: 'success', message: 'ploeh' } ]);
+        deferred.resolve({ notifications: [ { about: '1D5DAE201ECE4EBAAF536C75ADF30CC1', type: 'success', message: 'ploeh' } ], url: 'notifications/ploeh' });
         $rootScope.$apply();
 
         expect(stub.getNotification).toHaveBeenCalledWith('notifications/ploeh');

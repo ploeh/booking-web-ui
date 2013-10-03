@@ -54,9 +54,9 @@ angular.module('bookingApp.services', []).
         $http.get(url).
           success(function(data) {
             if(data.notifications.length == 0)
-              deferred.resolve([]);
+              deferred.resolve({ notifications: [], url: url });
             else
-              deferred.resolve([data.notifications[0]])
+              deferred.resolve({ notifications: [data.notifications[0]], url: url })
           }).
           error(function() {
             deferred.reject();
