@@ -8,7 +8,7 @@
 </head>
 <body ng-controller="NotificationsController">
   <div id="headerBar">
-    <div class="notification" ng-class="{ success: notification.type == 'Success', error: notification.type == 'Failure' }" ng-repeat="notification in notifications">{{notification.message}} <a href="" ng-click="dismiss(notification)">[x]</a></div>
+    <div class="notification" ng-class="{ success: notification.type == 'Success', error: notification.type == 'Failure' }" ng-repeat="notification in notifications">{{notification.message}} <a class="close" href="" ng-click="dismiss(notification)">[x]</a></div>
 
     <ul class="menu" ng-controller="MenuController">
       <li><a href="#/home">home</a></li>

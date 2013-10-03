@@ -61,6 +61,10 @@ select {
   color: #ddff00;
 }
 
+.close {
+  float: right;
+}
+
 .menu {
   background: #222222;
   list-style: none;
