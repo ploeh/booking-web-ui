@@ -321,13 +321,28 @@ describe('controllers', function(){
 
     describe('add notification poll address', function() {
       it('exists as a property', inject(function($q, $rootScope) {
-        createController('NotificationsController', { $scope : scope })
+        createController('NotificationsController', { $scope : scope });
         expect(scope.addNotificationAddress).toBeDefined();
       }))
 
       it('is a function', inject(function($q, $rootScope) {
-        createController('NotificationsController', { $scope : scope })
+        createController('NotificationsController', { $scope : scope });
         expect(scope.addNotificationAddress instanceof Function).toBeTruthy();
+      }))
+
+      it('adds the poll url to the array of poll urls', inject(function($q, $rootScope) {
+        createController('NotificationsController', { $scope : scope });
+        scope.addNotificationAddress('foo');
+        expect(scope.pollUrls).toEqual(['foo']);
+      }))
+
+      it('adds the poll url to the end of existing poll urls', inject(function($q, $rootScope) {
+        createController('NotificationsController', { $scope : scope });
+        scope.pollUrls = ['bar'];
+
+        scope.addNotificationAddress('baz');
+
+        expect(scope.pollUrls).toEqual(['bar', 'baz']);
       }))
     })
   })
