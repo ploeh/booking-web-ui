@@ -312,4 +312,23 @@ describe('controllers', function(){
       expect(scope.addNotificationAddress).toHaveBeenCalledWith('foo');
     }));
   })
+
+  describe('NotificationsController', function() {
+    var notificationGateway;
+    beforeEach(inject(function($q) {
+      notificationGateway = { getNotification : jasmine.createSpy('getNotification').andReturn($q.defer().promise) };
+    }));
+
+    describe('add notification poll address', function() {
+      it('exists as a property', inject(function($q, $rootScope) {
+        createController('NotificationsController', { $scope : scope })
+        expect(scope.addNotificationAddress).toBeDefined();
+      }))
+
+      it('is a function', inject(function($q, $rootScope) {
+        createController('NotificationsController', { $scope : scope })
+        expect(scope.addNotificationAddress instanceof Function).toBeTruthy();
+      }))
+    })
+  })
 });

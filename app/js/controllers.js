@@ -75,6 +75,6 @@ angular.module('bookingApp.controllers', []).
   	};
   }).
 
-  controller('NotificationsController', function() {
-
+  controller('NotificationsController', function($scope) {
+    $scope.addNotificationAddress = function() {}
   });
