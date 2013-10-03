@@ -364,10 +364,10 @@ describe('controllers', function(){
         scope.pollUrls = ['notifications/ploeh'];
 
         scope.pollOnce();
-        deferred.resolve(['notifications/ploeh']);
+        deferred.resolve([ { about: '1D5DAE201ECE4EBAAF536C75ADF30CC1', type: 'success', message: 'ploeh' } ]);
         $rootScope.$apply();
 
-        expect(scope.notifications).toEqual(['notifications/ploeh']);
+        expect(scope.notifications).toEqual([ { about: '1D5DAE201ECE4EBAAF536C75ADF30CC1', type: 'success', message: 'ploeh' } ]);
       }))
     })
   })
