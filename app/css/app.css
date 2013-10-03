@@ -12,17 +12,17 @@ body {
   font-family: "Helvetica Neue", Helvetica, Verdana, Arial, sans-serif;
   font-size: 13px;
   line-height: 18px;
-  color: #33aa33;
+  color: #ffffff;;
   background-color: #333333;
 }
 
 a {
-  color: #99dd99;
+  color: #f58809;;
   text-decoration: none;
 }
 
 a:hover {
-  color: #aaffaa;
+  color: #ffaa38;;
   text-decoration: underline;
 }
 
