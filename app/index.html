@@ -7,14 +7,18 @@
   <link rel="stylesheet" href="css/jquery.ui.all.css">
 </head>
 <body ng-controller="NotificationsController">
-  <div ng-repeat="notification in notifications">{{notification.message}} <a href="" ng-click="dismiss(notification)">[x]</a></div>
+  <div id="headerBar">
+    <div ng-repeat="notification in notifications">{{notification.message}} <a href="" ng-click="dismiss(notification)">[x]</a></div>
 
-  <ul class="menu" ng-controller="MenuController">
-    <li><a href="#/home">home</a></li>
-    <li><a href="" ng-click="bookToday()">book today!</a></li>
-  </ul>
+    <ul class="menu" ng-controller="MenuController">
+      <li><a href="#/home">home</a></li>
+      <li><a href="" ng-click="bookToday()">book today!</a></li>
+    </ul>
+  </div>
 
-  <div ng-view></div>
+  <div id="contentWrapper">
+    <div ng-view></div>
+  </div>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>

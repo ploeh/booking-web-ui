@@ -1,10 +1,38 @@
 /* app css stylesheet */
 
+#contentWrapper {
+  margin: 1em;
+}
+
+#headerBar {
+}
+
+body {
+  margin: 0px;
+  font-family: "Helvetica Neue", Helvetica, Verdana, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  color: #33aa33;
+  background-color: #333333;
+}
+
+a {
+  color: #99dd99;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #aaffaa;
+  text-decoration: underline;
+}
+
 .menu {
+  background: #222222;
   list-style: none;
   border-bottom: 0.1em solid black;
+  margin-top: 0;
   margin-bottom: 2em;
-  padding: 0 0 0.5em;
+  padding: 0.5em 1em 0.5em;
 }
 
 .menu:before {
