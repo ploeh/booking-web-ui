@@ -53,7 +53,7 @@ angular.module('bookingApp.services', []).
         var deferred = $q.defer();
         $http.get(url).
           success(function(data) {
-            deferred.resolve([])
+            deferred.resolve(data.notifications)
           });
         return deferred.promise;
       }

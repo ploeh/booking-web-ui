@@ -167,7 +167,22 @@ describe('service', function() {
           actual = data;
         })
         $httpBackend.flush();
+
         expect(actual).toEqual([]);
+      }))
+
+      it('returns correct result when there is a single notification on back-end', inject(function($httpBackend) {
+        var url = 'notifications/6899E4C6A28E4B3A8C10E56D00155C4F';
+        var expected = [ { about: '6899E4C6A28E4B3A8C10E56D00155C4F', type: 'success', message: 'foo' } ];
+        $httpBackend.expectGET(url).respond({ notifications: expected });
+
+        var actual;
+        sut.getNotification(url).then(function(data) {
+          actual = data;
+        })
+        $httpBackend.flush();
+
+        expect(actual).toEqual(expected);
       }))
     })
   })
