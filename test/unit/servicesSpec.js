@@ -184,6 +184,20 @@ describe('service', function() {
 
         expect(actual).toEqual(expected);
       }))
+
+      it('returns only the first notification from the back-end', inject(function($httpBackend) {
+        var url = 'notifications/B18D41E607F948E4A661ABA2F7EC1EFF';
+        var expected = { about: 'B18D41E607F948E4A661ABA2F7EC1EFF', type: 'error', message: 'bar' };
+        $httpBackend.expectGET(url).respond({ notifications: [ expected, { about: '8484AE26294C4115BA738E388ECA885D', type: 'success', message: 'baz' } ] });
+
+        var actual;
+        sut.getNotification(url).then(function(data) {
+          actual = data;
+        })
+        $httpBackend.flush();
+
+        expect(actual).toEqual([expected]);
+      }))
     })
   })
 });
