@@ -6,8 +6,8 @@
   <link rel="stylesheet" href="css/app.css"/>
   <link rel="stylesheet" href="css/jquery.ui.all.css">
 </head>
-<body>
-  <div ng-show="hasNotification" ng-controller="NotificationsController">{{message}}</div>
+<body ng-controller="NotificationsController">
+  <div ng-show="hasNotification">{{message}}</div>
 
   <ul class="menu" ng-controller="MenuController">
     <li><a href="#/home">home</a></li>
