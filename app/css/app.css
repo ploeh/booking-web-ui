@@ -45,6 +45,14 @@ select {
   float: left; 
 }
 
+.notification {
+  background: #111111;
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-top: 0;
+  padding: 0.5em 1em 0.5em;
+}
+
 .menu {
   background: #222222;
   list-style: none;
