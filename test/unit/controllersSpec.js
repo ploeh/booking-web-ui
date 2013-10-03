@@ -321,28 +321,53 @@ describe('controllers', function(){
 
     describe('add notification poll address', function() {
       it('exists as a property', inject(function($q, $rootScope) {
-        createController('NotificationsController', { $scope : scope });
+        createController('NotificationsController', { $scope : scope, notificationGateway : notificationGateway });
         expect(scope.addNotificationAddress).toBeDefined();
       }))
 
       it('is a function', inject(function($q, $rootScope) {
-        createController('NotificationsController', { $scope : scope });
+        createController('NotificationsController', { $scope : scope, notificationGateway : notificationGateway });
         expect(scope.addNotificationAddress instanceof Function).toBeTruthy();
       }))
 
       it('adds the poll url to the array of poll urls', inject(function($q, $rootScope) {
-        createController('NotificationsController', { $scope : scope });
+        createController('NotificationsController', { $scope : scope, notificationGateway : notificationGateway });
         scope.addNotificationAddress('foo');
         expect(scope.pollUrls).toEqual(['foo']);
       }))
 
       it('adds the poll url to the end of existing poll urls', inject(function($q, $rootScope) {
-        createController('NotificationsController', { $scope : scope });
+        createController('NotificationsController', { $scope : scope, notificationGateway : notificationGateway });
         scope.pollUrls = ['bar'];
 
         scope.addNotificationAddress('baz');
 
         expect(scope.pollUrls).toEqual(['bar', 'baz']);
+      }))
+    })
+
+    describe('poll once', function() {
+      it('exists as a property', inject(function($q, $rootScope) {
+        createController('NotificationsController', { $scope : scope, notificationGateway : notificationGateway });
+        expect(scope.pollOnce).toBeDefined();
+      }))
+
+      it('is a function', inject(function($q, $rootScope) {
+        createController('NotificationsController', { $scope : scope, notificationGateway : notificationGateway });
+        expect(scope.pollOnce instanceof Function).toBeTruthy();
+      }))
+
+      it('adds a notification received from the gateway', inject(function($q, $rootScope) {
+        var deferred = $q.defer();
+        var stub = { getNotification : jasmine.createSpy('getNotification').andReturn(deferred.promise) };
+        createController('NotificationsController', { $scope : scope, notificationGateway : stub });        
+        scope.pollUrls = ['notifications/ploeh'];
+
+        scope.pollOnce();
+        deferred.resolve(['notifications/ploeh']);
+        $rootScope.$apply();
+
+        expect(scope.notifications).toEqual(['notifications/ploeh']);
       }))
     })
   })

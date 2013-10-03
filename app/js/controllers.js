@@ -75,9 +75,23 @@ angular.module('bookingApp.controllers', []).
   	};
   }).
 
-  controller('NotificationsController', function($scope) {
-    $scope.pollUrls = []
+  controller('NotificationsController', function($scope, notificationGateway) {
+    $scope.pollUrls = [];
+    $scope.notifications = [];
+    
     $scope.addNotificationAddress = function(url) {
       $scope.pollUrls.push(url);
+    }
+
+    $scope.pollOnce = function() {
+      for (var i = 0; i < $scope.pollUrls.length; i++) {
+        var url = $scope.pollUrls[i];
+        notificationGateway.getNotification(url).
+          then(function(data) {
+            for (var i = 0; i < data.length; i++) {
+              $scope.notifications.push(data[i]);
+            };
+          })
+      };
     }
   });
