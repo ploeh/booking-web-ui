@@ -26,6 +26,25 @@ a:hover {
   text-decoration: underline;
 }
 
+label {
+  color: #f58809;;
+  display: inline-block;
+  float: left;
+  clear: left;
+  width: 5em;
+  text-align: left;
+}
+
+input {
+  display: inline-block;
+  float: left;
+}
+
+select {
+  display: inline-block;
+  float: left; 
+}
+
 .menu {
   background: #222222;
   list-style: none;

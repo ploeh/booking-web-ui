@@ -3,11 +3,11 @@
 	<form ng-submit="save()">
 		<fieldset>
 			<legend>Please fill in the details about your reservation request:</legend>
-			Date: {{booking.date}}<br />
-			Name: <input type="text" ng-model="booking.name" /><br />
-			Email: <input type="email" ng-model="booking.email" /><br />
-			Quantity: <select ng-model="booking.quantity" ng-options="seat for seat in seats"></select><br />
-			<input type="submit" id="save" value="Save" ng-disabled="booking.quantity <= 0" />
+			<label>Date:</label>{{booking.date}}<br />
+			<label>Name:</label><input type="text" ng-model="booking.name" /><br />
+			<label>Email:</label><input type="email" ng-model="booking.email" /><br />
+			<label>Quantity:</label><select ng-model="booking.quantity" ng-options="seat for seat in seats"></select><br />
+			<label>&nbsp;</label><input type="submit" id="save" value="Save" ng-disabled="booking.quantity <= 0" />
 		</fieldset>
 	</form>
 </div>
@@ -17,10 +17,10 @@
 	<fieldset>
 		<legend>We have recorded the following about your request:</legend>
 
-		<div>Date: {{booking.date}}</div>
-		<div>Name: {{booking.name}}</div>
-		<div>Email: {{booking.email}}</div>
-		<div>Quantity: {{booking.quantity}}</div>
+		<div><label>Date:</label> {{booking.date}}</div>
+		<div><label>Name:</label> {{booking.name}}</div>
+		<div><label>Email:</label> {{booking.email}}</div>
+		<div><label>Quantity:</label> {{booking.quantity}}</div>
 
 	</fieldset>
 	<p>
