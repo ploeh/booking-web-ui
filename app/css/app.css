@@ -53,6 +53,14 @@ select {
   padding: 0.5em 1em 0.5em;
 }
 
+.error {
+  color: #ff0000;
+}
+
+.success {
+  color: #ddff00;
+}
+
 .menu {
   background: #222222;
   list-style: none;
