@@ -1,29 +1,27 @@
 <div ng-hide="isReceipt">
 	<h1>Make a reservation</h1>
+	<p>
+		Please fill in the details about your reservation request:
+	</p>
 	<form ng-submit="save()">
-		<fieldset>
-			<legend>Please fill in the details about your reservation request:</legend>
-			<label>Date:</label>{{booking.date}}<br />
-			<label>Name:</label><input type="text" ng-model="booking.name" /><br />
-			<label>Email:</label><input type="email" ng-model="booking.email" /><br />
-			<label>Quantity:</label><select ng-model="booking.quantity" ng-options="seat for seat in seats"></select><br />
-			<label>&nbsp;</label><input type="submit" id="save" value="Save" ng-disabled="booking.quantity <= 0" />
-		</fieldset>
+		<label>Date:</label>{{booking.date}}<br />
+		<label>Name:</label><input type="text" ng-model="booking.name" /><br />
+		<label>Email:</label><input type="email" ng-model="booking.email" /><br />
+		<label>Quantity:</label><select ng-model="booking.quantity" ng-options="seat for seat in seats"></select><br />
+		<label>&nbsp;</label><input type="submit" id="save" value="Save" ng-disabled="booking.quantity <= 0" />
 	</form>
 </div>
 
 <div ng-show="isReceipt">
 	<h1>Thank your for your reservation</h1>
-	<fieldset>
-		<legend>We have recorded the following about your request:</legend>
-
-		<div><label>Date:</label> {{booking.date}}</div>
-		<div><label>Name:</label> {{booking.name}}</div>
-		<div><label>Email:</label> {{booking.email}}</div>
-		<div><label>Quantity:</label> {{booking.quantity}}</div>
-
-	</fieldset>
 	<p>
-		<div>Please note that this page only verifies that we have received your request. It does not guarantee that we can fulfill your reservation, but in either case we will send you an email as soon as we know.</div>
+		We have recorded the following about your request:
+	</p>
+	<div><label>Date:</label> {{booking.date}}</div>
+	<div><label>Name:</label> {{booking.name}}</div>
+	<div><label>Email:</label> {{booking.email}}</div>
+	<div><label>Quantity:</label> {{booking.quantity}}</div>
+	<p>
+		Please note that this page only verifies that we have received your request. It does not guarantee that we can fulfill your reservation, but in either case we will send you an email as soon as we know.
 	</p>
 </div>
