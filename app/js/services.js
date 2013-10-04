@@ -8,7 +8,7 @@ angular.module('bookingApp.services', []).
   	return {
   	  makeReservation : function(reservationRequest) {
         var deferred = $q.defer();
-  	  	$http.post('reservationrequests', reservationRequest).
+  	  	$http.post('reservations', reservationRequest).
           success(function(data) {
             deferred.resolve(data.links[0].href);
           }).

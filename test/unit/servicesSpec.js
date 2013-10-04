@@ -28,7 +28,7 @@ describe('service', function() {
   	  	  quantity: 4
   	  	};
         $httpBackend.
-          expectPOST('reservationrequests', reservationRequest).
+          expectPOST('reservations', reservationRequest).
           respond(202, { links: [ { rel: 'http://ploeh.samples/notification', href: 'bar' } ] });
 
   	  	sut.makeReservation(reservationRequest);
@@ -45,7 +45,7 @@ describe('service', function() {
   	  	};
         var expected = 'notifications/D18E69CF9B3F46D096AAB9E26F91335B'
   	  	$httpBackend.
-          expectPOST('reservationrequests', reservationRequest).
+          expectPOST('reservations', reservationRequest).
           respond(202, { links: [ { rel: 'http://ploeh.samples/notification', href: expected } ] });
 
   	  	var actual;
