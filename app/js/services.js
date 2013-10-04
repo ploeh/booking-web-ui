@@ -6,9 +6,9 @@ angular.module('bookingApp.services', []).
 
   factory('reservationGateway', function($http, $q) {
   	return {
-  	  makeReservation : function(reservationRequest) {
+  	  makeReservation : function(makeReservation) {
         var deferred = $q.defer();
-  	  	$http.post('reservations', reservationRequest).
+  	  	$http.post('reservations', makeReservation).
           success(function(data) {
             deferred.resolve(data.links[0].href);
           }).
