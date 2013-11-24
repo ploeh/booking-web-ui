@@ -371,6 +371,21 @@ describe('controllers', function(){
         expect(scope.notifications).toEqual([ { about: '1D5DAE201ECE4EBAAF536C75ADF30CC1', type: 'success', message: 'ploeh' } ]);
         expect(scope.pollUrls).toEqual([]);
       }))
+
+      it('does not remove poll url when response has no notifications', inject(function($q, $rootScope) {
+        var deferred = $q.defer();
+        var stub = { getNotification : jasmine.createSpy('getNotification').andReturn(deferred.promise) };
+        createController('NotificationsController', { $scope : scope, notificationGateway : stub });        
+        scope.pollUrls = ['notifications/ploeh'];
+
+        scope.pollOnce();
+        deferred.resolve({ notifications: [], url: 'notifications/ploeh' });
+        $rootScope.$apply();
+
+        expect(stub.getNotification).toHaveBeenCalledWith('notifications/ploeh');
+        expect(scope.notifications).toEqual([]);
+        expect(scope.pollUrls).toEqual(['notifications/ploeh']);
+      }))
     })
 
     describe('dismiss', function() {

@@ -96,8 +96,10 @@ angular.module('bookingApp.controllers', []).
             for (var j = 0; j < data.notifications.length; j++) {
               $scope.notifications.push(data.notifications[j]);
             };
-            var index = $scope.pollUrls.indexOf(data.url);
-            $scope.pollUrls.splice(index, 1);
+            if (data.notifications.length > 0) {
+              var index = $scope.pollUrls.indexOf(data.url);
+              $scope.pollUrls.splice(index, 1);
+            }
           })
       };
     }
