@@ -61,7 +61,7 @@ module.exports = function (grunt) {
             },
             jsTest: {
                 files: ['test/unit/{,*/}*.js'],
-                //tasks: ['newer:jshint:test', 'karma']
+                tasks: [/*'newer:jshint:test', */'karma']
             },
             styles: {
                 files: ['<%= booking.app %>/css/{,*/}*.css'],
