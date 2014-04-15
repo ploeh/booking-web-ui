@@ -17,8 +17,8 @@ module.exports = function (config) {
             'app/bower_components/jquery.ui/ui/jquery.ui.core.js',
             'app/bower_components/jquery.ui/ui/jquery.ui.widget.js',
             'app/bower_components/jquery.ui/ui/jquery.ui.datepicker.js',
-            'app/scripts/*.js',
-            'app/scripts/**/*.js',
+            'app/js/*.js',
+            'app/js/**/*.js',
             'test/unit/*.js',
             'test/unit/**/*.js'
         ],
